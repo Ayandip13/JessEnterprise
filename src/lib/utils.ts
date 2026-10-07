@@ -25,7 +25,10 @@ export function createWhatsAppQuoteLink(
   customerCompany?: string,
   customerMessage?: string
 ): string {
-  const cleanPhone = phoneNumber.replace(/[^\d]/g, "");
+  let cleanPhone = phoneNumber ? phoneNumber.replace(/[^\d]/g, "") : "919225901519";
+  if (cleanPhone.length === 10) {
+    cleanPhone = `91${cleanPhone}`;
+  }
   let text = `Hello Jess Enterprises,\n\nI am interested in requesting a quotation for:\n*Product:* ${productName}\n`;
 
   if (specifications && specifications.length > 0) {

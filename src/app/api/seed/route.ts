@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { connectToDatabase } from "@/lib/db";
 import { ProductModel } from "@/lib/models/Product";
 import { CategoryModel } from "@/lib/models/Category";
@@ -6,9 +6,15 @@ import { ServiceModel } from "@/lib/models/Service";
 import { ClientLogoModel } from "@/lib/models/ClientLogo";
 import { SettingsModel } from "@/lib/models/Settings";
 import { PRODUCTS, CATEGORIES, SERVICES, CLIENT_LOGOS, COMPANY_INFO } from "@/lib/catalog-data";
+import { verifyAdminAuth } from "@/lib/auth";
 
-export async function POST() {
+export async function POST(req: NextRequest) {
   try {
+    const authCheck = verifyAdminAuth(req);
+    if (!authCheck.authorized && authCheck.errorResponse) {
+      return authCheck.errorResponse;
+    }
+
     const db = await connectToDatabase();
     if (!db) {
       return NextResponse.json(

@@ -3,6 +3,7 @@ import { getProducts } from "@/lib/data-service";
 import { connectToDatabase } from "@/lib/db";
 import { ProductModel } from "@/lib/models/Product";
 import { slugify } from "@/lib/utils";
+import { verifyAdminAuth } from "@/lib/auth";
 
 export async function GET(req: NextRequest) {
   try {
@@ -22,6 +23,11 @@ export async function GET(req: NextRequest) {
 
 export async function POST(req: NextRequest) {
   try {
+    const authCheck = verifyAdminAuth(req);
+    if (!authCheck.authorized && authCheck.errorResponse) {
+      return authCheck.errorResponse;
+    }
+
     const db = await connectToDatabase();
     if (!db) {
       return NextResponse.json(

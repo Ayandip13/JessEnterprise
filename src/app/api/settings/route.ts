@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { getCompanySettings } from "@/lib/data-service";
 import { connectToDatabase } from "@/lib/db";
 import { SettingsModel } from "@/lib/models/Settings";
+import { verifyAdminAuth } from "@/lib/auth";
 
 export async function GET() {
   try {
@@ -14,6 +15,11 @@ export async function GET() {
 
 export async function PUT(req: NextRequest) {
   try {
+    const authCheck = verifyAdminAuth(req);
+    if (!authCheck.authorized && authCheck.errorResponse) {
+      return authCheck.errorResponse;
+    }
+
     const db = await connectToDatabase();
     if (!db) {
       return NextResponse.json(
