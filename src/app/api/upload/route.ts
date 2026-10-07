@@ -39,24 +39,31 @@ export async function POST(req: NextRequest) {
     const bytes = await file.arrayBuffer();
     const buffer = Buffer.from(bytes);
 
-    // Ensure upload directory exists
     const subFolder = type === "clients" ? "clients" : "products";
-    const uploadDir = path.join(process.cwd(), "public", "uploads", subFolder);
-    await mkdir(uploadDir, { recursive: true });
+    let publicUrl = "";
 
-    // Generate clean unique filename
-    const ext = path.extname(file.name) || ".png";
-    const safeBaseName = file.name.replace(ext, "").replace(/[^\w-]/g, "_");
-    const fileName = `${safeBaseName}_${Date.now()}${ext}`;
-    const filePath = path.join(uploadDir, fileName);
+    try {
+      // Attempt local filesystem write (Localhost development)
+      const uploadDir = path.join(process.cwd(), "public", "uploads", subFolder);
+      await mkdir(uploadDir, { recursive: true });
 
-    await writeFile(filePath, buffer);
+      const ext = path.extname(file.name) || ".png";
+      const safeBaseName = file.name.replace(ext, "").replace(/[^\w-]/g, "_");
+      const fileName = `${safeBaseName}_${Date.now()}${ext}`;
+      const filePath = path.join(uploadDir, fileName);
 
-    const publicUrl = `/uploads/${subFolder}/${fileName}`;
+      await writeFile(filePath, buffer);
+      publicUrl = `/uploads/${subFolder}/${fileName}`;
+    } catch (fsErr: any) {
+      console.warn("Local filesystem write unvailable (serverless environment), converting to Data URI:", fsErr.message);
+      // Fallback for Vercel / serverless read-only filesystem: Convert to Base64 Data URI
+      const base64 = buffer.toString("base64");
+      publicUrl = `data:${file.type};base64,${base64}`;
+    }
+
     return NextResponse.json({
       success: true,
       url: publicUrl,
-      fileName,
     });
   } catch (error: any) {
     return NextResponse.json({ success: false, error: error.message }, { status: 500 });
