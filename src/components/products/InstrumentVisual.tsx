@@ -1,4 +1,6 @@
-import React from "react";
+"use client";
+
+import React, { useState } from "react";
 import {
   FlaskConical,
   Scale,
@@ -18,11 +20,19 @@ import {
 interface InstrumentVisualProps {
   categorySlug: string;
   slug: string;
+  imageUrl?: string;
   className?: string;
 }
 
-export function InstrumentVisual({ categorySlug, slug, className = "h-40" }: InstrumentVisualProps) {
-  // Determine visual styling and icon based on product slug/category
+export function InstrumentVisual({
+  categorySlug,
+  slug,
+  imageUrl,
+  className = "h-40",
+}: InstrumentVisualProps) {
+  const [imageError, setImageError] = useState(false);
+
+  // Determine visual styling and icon based on product slug/category fallback
   const getVisualConfig = () => {
     if (slug.includes("spectrophotometer")) {
       return {
@@ -144,6 +154,22 @@ export function InstrumentVisual({ categorySlug, slug, className = "h-40" }: Ins
       tag: "Jess Enterprises",
     };
   };
+
+  if (imageUrl && !imageError) {
+    return (
+      <div
+        className={`w-full ${className} bg-white border border-slate-200 rounded-md flex items-center justify-center p-2 relative overflow-hidden group-hover:border-sky-300 transition-colors`}
+      >
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src={imageUrl}
+          alt={slug}
+          onError={() => setImageError(true)}
+          className="max-h-full max-w-full object-contain transition-transform duration-200 group-hover:scale-105"
+        />
+      </div>
+    );
+  }
 
   const config = getVisualConfig();
   const Icon = config.icon;

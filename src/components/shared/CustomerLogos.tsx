@@ -1,8 +1,10 @@
 import React from "react";
 import { Building2, Award } from "lucide-react";
-import { CLIENT_LOGOS } from "@/lib/catalog-data";
+import { getClientLogos } from "@/lib/data-service";
 
-export function CustomerLogos({ title = "Our Precious Customers" }: { title?: string }) {
+export async function CustomerLogos({ title = "Our Precious Customers" }: { title?: string }) {
+  const clients = await getClientLogos();
+
   return (
     <section className="py-16 bg-slate-50 border-b border-slate-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -21,12 +23,21 @@ export function CustomerLogos({ title = "Our Precious Customers" }: { title?: st
 
         {/* Customer grid */}
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
-          {CLIENT_LOGOS.map((client, idx) => (
+          {clients.map((client, idx) => (
             <div
-              key={idx}
-              className="bg-white border border-slate-200 rounded-md p-4 text-center hover:border-sky-300 hover:shadow-2xs transition-all duration-150 flex flex-col justify-center items-center h-24"
+              key={client.id || idx}
+              className="bg-white border border-slate-200 rounded-md p-4 text-center hover:border-sky-300 hover:shadow-2xs transition-all duration-150 flex flex-col justify-center items-center h-28 group"
             >
-              <Building2 className="w-5 h-5 text-sky-700 mb-1.5 opacity-80" />
+              {client.logoUrl ? (
+                /* eslint-disable-next-line @next/next/no-img-element */
+                <img
+                  src={client.logoUrl}
+                  alt={client.name}
+                  className="max-h-12 max-w-[80%] object-contain mb-1.5 transition-transform duration-200 group-hover:scale-105"
+                />
+              ) : (
+                <Building2 className="w-6 h-6 text-sky-700 mb-1.5 opacity-80" />
+              )}
               <span className="text-xs font-bold text-slate-900 line-clamp-2 leading-tight">
                 {client.name}
               </span>
@@ -40,3 +51,4 @@ export function CustomerLogos({ title = "Our Precious Customers" }: { title?: st
     </section>
   );
 }
+

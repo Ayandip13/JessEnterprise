@@ -34,9 +34,14 @@ export interface CatalogService {
 }
 
 export interface CatalogClient {
+  id?: string;
   name: string;
   industry: string;
   location?: string;
+  logoUrl?: string;
+  logoText?: string;
+  order?: number;
+  isActive?: boolean;
 }
 
 export interface CompanySettings {

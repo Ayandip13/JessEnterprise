@@ -3,6 +3,7 @@ import { getProductBySlug } from "@/lib/data-service";
 import { connectToDatabase } from "@/lib/db";
 import { ProductModel } from "@/lib/models/Product";
 import { verifyAdminAuth } from "@/lib/auth";
+import mongoose from "mongoose";
 
 export async function GET(
   req: NextRequest,
@@ -40,10 +41,32 @@ export async function PUT(
       );
     }
 
-    const { slug } = await params;
+    const { slug: identifier } = await params;
     const body = await req.json();
 
-    const updated = await ProductModel.findOneAndUpdate({ slug }, body, { new: true });
+    const isId = mongoose.Types.ObjectId.isValid(identifier);
+    const query = isId ? { $or: [{ _id: identifier }, { slug: identifier }] } : { slug: identifier };
+
+    const updated = await ProductModel.findOneAndUpdate(
+      query,
+      {
+        $set: {
+          name: body.name,
+          categorySlug: body.categorySlug,
+          categoryName: body.categoryName,
+          shortDescription: body.shortDescription,
+          fullDescription: body.fullDescription,
+          images: body.images,
+          specifications: body.specifications,
+          isFeatured: body.isFeatured,
+          isAvailable: body.isAvailable,
+          enquiryEnabled: body.enquiryEnabled,
+          legalMetrologyCert: body.legalMetrologyCert,
+        },
+      },
+      { new: true }
+    );
+
     if (!updated) {
       return NextResponse.json({ success: false, error: "Product not found" }, { status: 404 });
     }
@@ -72,8 +95,11 @@ export async function DELETE(
       );
     }
 
-    const { slug } = await params;
-    const deleted = await ProductModel.findOneAndDelete({ slug });
+    const { slug: identifier } = await params;
+    const isId = mongoose.Types.ObjectId.isValid(identifier);
+    const query = isId ? { $or: [{ _id: identifier }, { slug: identifier }] } : { slug: identifier };
+
+    const deleted = await ProductModel.findOneAndDelete(query);
 
     if (!deleted) {
       return NextResponse.json({ success: false, error: "Product not found" }, { status: 404 });
@@ -84,4 +110,3 @@ export async function DELETE(
     return NextResponse.json({ success: false, error: error.message }, { status: 500 });
   }
 }
-

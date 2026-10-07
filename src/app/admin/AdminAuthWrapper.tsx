@@ -174,6 +174,12 @@ export function AdminAuthWrapper({ children }: { children: React.ReactNode }) {
             Services & AMC
           </Link>
           <Link
+            href="/admin/customers"
+            className="flex items-center gap-2.5 px-3 py-2 text-xs font-semibold text-slate-200 hover:text-white hover:bg-indigo-900/80 rounded-md transition-colors"
+          >
+            Customers & Logos
+          </Link>
+          <Link
             href="/admin/settings"
             className="flex items-center gap-2.5 px-3 py-2 text-xs font-semibold text-slate-200 hover:text-white hover:bg-indigo-900/80 rounded-md transition-colors"
           >

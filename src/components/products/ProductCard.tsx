@@ -32,7 +32,12 @@ export function ProductCard({ product, whatsAppNumber }: ProductCardProps) {
     <div className="bg-white border border-slate-200 rounded-lg shadow-2xs hover:shadow-md transition-all duration-200 flex flex-col h-full overflow-hidden group">
       {/* Top Instrument Visual Showcase */}
       <div className="p-3 bg-slate-50 border-b border-slate-100">
-        <InstrumentVisual categorySlug={product.categorySlug} slug={product.slug} className="h-36" />
+        <InstrumentVisual
+          categorySlug={product.categorySlug}
+          slug={product.slug}
+          imageUrl={product.images?.[0]}
+          className="h-36"
+        />
       </div>
 
       {/* Card Content & Badges */}

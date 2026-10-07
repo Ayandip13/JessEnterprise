@@ -165,11 +165,16 @@ export async function getClientLogos(): Promise<CatalogClient[]> {
   try {
     const db = await connectToDatabase();
     if (db) {
-      const docs = await ClientLogoModel.find().sort({ order: 1 });
+      const docs = await ClientLogoModel.find({ isActive: { $ne: false } }).sort({ order: 1 });
       if (docs.length > 0) {
         return docs.map((doc: IClientLogo) => ({
+          id: doc._id.toString(),
           name: doc.name,
           industry: doc.industry || "Pharmaceuticals",
+          logoUrl: doc.logoUrl || "",
+          logoText: doc.logoText || doc.name,
+          order: doc.order || 0,
+          isActive: doc.isActive !== false,
         }));
       }
     }

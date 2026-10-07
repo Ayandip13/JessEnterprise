@@ -6,6 +6,7 @@ export interface IClientLogo extends Document {
   logoText: string;
   logoUrl?: string;
   order: number;
+  isActive: boolean;
 }
 
 const ClientLogoSchema = new Schema<IClientLogo>(
@@ -15,6 +16,7 @@ const ClientLogoSchema = new Schema<IClientLogo>(
     logoText: { type: String, required: true },
     logoUrl: { type: String, default: "" },
     order: { type: Number, default: 0 },
+    isActive: { type: Boolean, default: true },
   },
   {
     timestamps: true,
