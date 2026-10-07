@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 
-const MONGODB_URI = process.env.MONGODB_URI || "";
+const DEFAULT_MONGODB_URI =
+  "mongodb+srv://ayandippaul284_db_user:pRhEzOoo719skXuO@cluster0.gz6ap2w.mongodb.net/jess_metrology?retryWrites=true&w=majority";
 
 interface MongooseCache {
   conn: typeof mongoose | null;
@@ -19,8 +20,9 @@ if (!global.mongooseCache) {
 }
 
 export async function connectToDatabase(): Promise<typeof mongoose | null> {
-  if (!MONGODB_URI) {
-    // Return null when MongoDB URI is not set, falling back to static seed catalog
+  const uri = process.env.MONGODB_URI || DEFAULT_MONGODB_URI;
+
+  if (!uri) {
     return null;
   }
 
@@ -33,7 +35,7 @@ export async function connectToDatabase(): Promise<typeof mongoose | null> {
       bufferCommands: false,
     };
 
-    cached.promise = mongoose.connect(MONGODB_URI, opts).then((m) => {
+    cached.promise = mongoose.connect(uri, opts).then((m) => {
       return m;
     });
   }
