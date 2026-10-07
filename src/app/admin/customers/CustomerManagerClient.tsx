@@ -134,15 +134,19 @@ export default function CustomerManagerClient({ initialClients = [] }: CustomerM
           body: JSON.stringify(payload),
         });
         const data = await res.json();
-        const created: CatalogClient = {
-          id: data.data?._id || `client-${Date.now()}`,
-          ...payload,
-        };
-        setClients([created, ...clients]);
-        setStatusMessage("Client added successfully!");
+        if (res.ok && data.success) {
+          const created: CatalogClient = {
+            id: data.data?._id || `client-${Date.now()}`,
+            ...payload,
+          };
+          setClients([created, ...clients]);
+          setStatusMessage("Client added successfully to Database!");
+        } else {
+          setStatusMessage("Notice: " + (data.error || "Database update failed."));
+        }
       }
     } catch (err: any) {
-      setStatusMessage("Client saved to active view.");
+      setStatusMessage("Error: " + err.message);
     } finally {
       resetForm();
     }

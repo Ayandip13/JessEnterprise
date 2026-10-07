@@ -184,8 +184,8 @@ export function ProductManagerClient({
         });
 
         const data = await res.json();
-        if (data.success) {
-          setStatusMessage("Product added successfully!");
+        if (res.ok && data.success) {
+          setStatusMessage("Product added successfully to Database!");
           const created: CatalogProduct = {
             id: data.data._id || `prod-${Date.now()}`,
             srNo: products.length + 1,
@@ -194,25 +194,11 @@ export function ProductManagerClient({
           setProducts([created, ...products]);
           resetForm();
         } else {
-          const created: CatalogProduct = {
-            id: `prod-${Date.now()}`,
-            srNo: products.length + 1,
-            ...prodPayload,
-          };
-          setProducts([created, ...products]);
-          setStatusMessage("Product added to active session view.");
-          resetForm();
+          setStatusMessage("Notice: " + (data.error || "Failed to save product to database."));
         }
       }
     } catch (err: any) {
-      const created: CatalogProduct = {
-        id: editingProduct?.id || `prod-${Date.now()}`,
-        srNo: products.length + 1,
-        ...prodPayload,
-      };
-      setProducts([created, ...products]);
-      resetForm();
-      setStatusMessage("Product saved in view.");
+      setStatusMessage("Error saving product: " + err.message);
     }
   };
 
