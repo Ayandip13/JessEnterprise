@@ -41,7 +41,7 @@ export async function getProducts(options?: {
         ];
       }
 
-      let docs = await ProductModel.find(query).sort({ srNo: 1, createdAt: -1 });
+      let docs = await ProductModel.find(query).sort({ srNo: 1, createdAt: -1 }).lean();
       if (docs.length === 0 && !options?.categorySlug && !options?.search) {
         await ProductModel.insertMany(
           PRODUCTS.map((p, idx) => ({
@@ -60,25 +60,30 @@ export async function getProducts(options?: {
             legalMetrologyCert: p.legalMetrologyCert || false,
           }))
         );
-        docs = await ProductModel.find(query).sort({ srNo: 1, createdAt: -1 });
+        docs = await ProductModel.find(query).sort({ srNo: 1, createdAt: -1 }).lean();
       }
 
       if (docs.length > 0) {
-        return docs.map((doc: IProduct) => ({
-          id: doc._id.toString(),
-          srNo: (doc as any).srNo || 1,
-          name: doc.name,
-          slug: doc.slug,
-          categorySlug: doc.categorySlug,
-          categoryName: doc.categoryName,
-          shortDescription: doc.shortDescription,
-          fullDescription: doc.fullDescription,
-          images: doc.images,
-          specifications: doc.specifications,
-          isFeatured: doc.isFeatured,
-          isAvailable: doc.isAvailable,
-          enquiryEnabled: doc.enquiryEnabled,
-          legalMetrologyCert: doc.legalMetrologyCert,
+        return docs.map((doc: any) => ({
+          id: String(doc._id),
+          srNo: doc.srNo || 1,
+          name: String(doc.name || ""),
+          slug: String(doc.slug || ""),
+          categorySlug: String(doc.categorySlug || ""),
+          categoryName: String(doc.categoryName || ""),
+          shortDescription: String(doc.shortDescription || ""),
+          fullDescription: String(doc.fullDescription || ""),
+          images: Array.isArray(doc.images) ? doc.images.map(String) : [],
+          specifications: Array.isArray(doc.specifications)
+            ? doc.specifications.map((s: any) => ({
+                name: String(s?.name || ""),
+                value: String(s?.value || ""),
+              }))
+            : [],
+          isFeatured: Boolean(doc.isFeatured),
+          isAvailable: doc.isAvailable !== false,
+          enquiryEnabled: doc.enquiryEnabled !== false,
+          legalMetrologyCert: doc.legalMetrologyCert ? String(doc.legalMetrologyCert) : undefined,
         }));
       }
     }
@@ -110,23 +115,28 @@ export async function getProductBySlug(slug: string): Promise<CatalogProduct | n
   try {
     const db = await connectToDatabase();
     if (db) {
-      const doc = await ProductModel.findOne({ slug });
+      const doc: any = await ProductModel.findOne({ slug }).lean();
       if (doc) {
         return {
-          id: doc._id.toString(),
-          srNo: (doc as any).srNo || 1,
-          name: doc.name,
-          slug: doc.slug,
-          categorySlug: doc.categorySlug,
-          categoryName: doc.categoryName,
-          shortDescription: doc.shortDescription,
-          fullDescription: doc.fullDescription,
-          images: doc.images,
-          specifications: doc.specifications,
-          isFeatured: doc.isFeatured,
-          isAvailable: doc.isAvailable,
-          enquiryEnabled: doc.enquiryEnabled,
-          legalMetrologyCert: doc.legalMetrologyCert,
+          id: String(doc._id),
+          srNo: doc.srNo || 1,
+          name: String(doc.name || ""),
+          slug: String(doc.slug || ""),
+          categorySlug: String(doc.categorySlug || ""),
+          categoryName: String(doc.categoryName || ""),
+          shortDescription: String(doc.shortDescription || ""),
+          fullDescription: String(doc.fullDescription || ""),
+          images: Array.isArray(doc.images) ? doc.images.map(String) : [],
+          specifications: Array.isArray(doc.specifications)
+            ? doc.specifications.map((s: any) => ({
+                name: String(s?.name || ""),
+                value: String(s?.value || ""),
+              }))
+            : [],
+          isFeatured: Boolean(doc.isFeatured),
+          isAvailable: doc.isAvailable !== false,
+          enquiryEnabled: doc.enquiryEnabled !== false,
+          legalMetrologyCert: doc.legalMetrologyCert ? String(doc.legalMetrologyCert) : undefined,
         };
       }
     }
@@ -142,18 +152,18 @@ export async function getCategories(): Promise<CatalogCategory[]> {
   try {
     const db = await connectToDatabase();
     if (db) {
-      let docs = await CategoryModel.find().sort({ order: 1 });
+      let docs = await CategoryModel.find().sort({ order: 1 }).lean();
       if (docs.length === 0) {
         await CategoryModel.insertMany(CATEGORIES);
-        docs = await CategoryModel.find().sort({ order: 1 });
+        docs = await CategoryModel.find().sort({ order: 1 }).lean();
       }
       if (docs.length > 0) {
-        return docs.map((doc: ICategory) => ({
-          name: doc.name,
-          slug: doc.slug,
-          description: doc.description,
-          iconName: doc.iconName || "Layers",
-          order: doc.order,
+        return docs.map((doc: any) => ({
+          name: String(doc.name || ""),
+          slug: String(doc.slug || ""),
+          description: String(doc.description || ""),
+          iconName: String(doc.iconName || "Layers"),
+          order: Number(doc.order) || 1,
         }));
       }
     }
@@ -167,20 +177,20 @@ export async function getServices(): Promise<CatalogService[]> {
   try {
     const db = await connectToDatabase();
     if (db) {
-      let docs = await ServiceModel.find();
+      let docs = await ServiceModel.find().lean();
       if (docs.length === 0) {
         await ServiceModel.insertMany(SERVICES);
-        docs = await ServiceModel.find();
+        docs = await ServiceModel.find().lean();
       }
       if (docs.length > 0) {
-        return docs.map((doc: IService) => ({
-          title: doc.title,
-          slug: doc.slug,
-          category: doc.category,
-          shortDescription: doc.shortDescription,
-          fullDescription: doc.fullDescription,
-          highlights: doc.highlights,
-          licenseNo: doc.licenseNo,
+        return docs.map((doc: any) => ({
+          title: String(doc.title || ""),
+          slug: String(doc.slug || ""),
+          category: String(doc.category || ""),
+          shortDescription: String(doc.shortDescription || ""),
+          fullDescription: String(doc.fullDescription || ""),
+          highlights: Array.isArray(doc.highlights) ? doc.highlights.map(String) : [],
+          licenseNo: doc.licenseNo ? String(doc.licenseNo) : undefined,
         }));
       }
     }
@@ -194,7 +204,7 @@ export async function getClientLogos(): Promise<CatalogClient[]> {
   try {
     const db = await connectToDatabase();
     if (db) {
-      let docs = await ClientLogoModel.find({ isActive: { $ne: false } }).sort({ order: 1 });
+      let docs = await ClientLogoModel.find({ isActive: { $ne: false } }).sort({ order: 1 }).lean();
       if (docs.length === 0) {
         await ClientLogoModel.insertMany(
           CLIENT_LOGOS.map((c, idx) => ({
@@ -206,16 +216,16 @@ export async function getClientLogos(): Promise<CatalogClient[]> {
             isActive: true,
           }))
         );
-        docs = await ClientLogoModel.find({ isActive: { $ne: false } }).sort({ order: 1 });
+        docs = await ClientLogoModel.find({ isActive: { $ne: false } }).sort({ order: 1 }).lean();
       }
       if (docs.length > 0) {
-        return docs.map((doc: IClientLogo) => ({
-          id: doc._id.toString(),
-          name: doc.name,
-          industry: doc.industry || "Pharmaceuticals",
-          logoUrl: doc.logoUrl || "",
-          logoText: doc.logoText || doc.name,
-          order: doc.order || 0,
+        return docs.map((doc: any) => ({
+          id: String(doc._id),
+          name: String(doc.name || ""),
+          industry: String(doc.industry || "Pharmaceuticals"),
+          logoUrl: String(doc.logoUrl || ""),
+          logoText: String(doc.logoText || doc.name || ""),
+          order: Number(doc.order) || 0,
           isActive: doc.isActive !== false,
         }));
       }
@@ -230,20 +240,20 @@ export async function getCompanySettings(): Promise<CompanySettings> {
   try {
     const db = await connectToDatabase();
     if (db) {
-      const doc = await SettingsModel.findOne();
+      const doc: any = await SettingsModel.findOne().lean();
       if (doc) {
         return {
-          companyName: doc.companyName,
-          tagline: doc.tagline,
-          legalMetrologyLicNo: doc.legalMetrologyLicNo,
-          gstNo: doc.gstNo,
-          msmeNo: doc.msmeNo,
-          primaryEmail: doc.primaryEmail,
-          phoneOffice: doc.phoneOffice,
-          phoneMobile: doc.phoneMobile,
-          whatsAppNumber: doc.whatsAppNumber,
-          address: doc.address,
-          aboutText: doc.aboutText,
+          companyName: String(doc.companyName || COMPANY_INFO.companyName),
+          tagline: String(doc.tagline || COMPANY_INFO.tagline),
+          legalMetrologyLicNo: String(doc.legalMetrologyLicNo || COMPANY_INFO.legalMetrologyLicNo),
+          gstNo: String(doc.gstNo || COMPANY_INFO.gstNo),
+          msmeNo: String(doc.msmeNo || COMPANY_INFO.msmeNo),
+          primaryEmail: String(doc.primaryEmail || COMPANY_INFO.primaryEmail),
+          phoneOffice: String(doc.phoneOffice || COMPANY_INFO.phoneOffice),
+          phoneMobile: String(doc.phoneMobile || COMPANY_INFO.phoneMobile),
+          whatsAppNumber: String(doc.whatsAppNumber || COMPANY_INFO.whatsAppNumber),
+          address: String(doc.address || COMPANY_INFO.address),
+          aboutText: String(doc.aboutText || COMPANY_INFO.aboutText),
         };
       }
     }
