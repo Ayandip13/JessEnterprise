@@ -507,17 +507,23 @@ export function QuoteModal({
               </div>
 
               {/* Pre-filled Message Preview */}
-              <div>
-                <span className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">
-                  Generated Message Preview:
+              <div className="space-y-1.5">
+                <span className="block text-[11px] font-extrabold uppercase tracking-wider text-slate-700">
+                  Pre-filled WhatsApp Message Preview:
                 </span>
-                <pre className="bg-slate-900 text-slate-200 text-xs p-3 rounded-lg font-mono whitespace-pre-wrap max-h-40 overflow-y-auto border border-slate-800 leading-relaxed">
-                  {generatedMessage}
-                </pre>
+                <div className="bg-emerald-50/80 border border-emerald-200/90 rounded-xl p-3.5 shadow-2xs text-left">
+                  <div className="flex items-center gap-1.5 text-[11px] font-bold text-emerald-800 border-b border-emerald-200/60 pb-1.5 mb-2">
+                    <Send className="w-3.5 h-3.5 text-emerald-600" />
+                    <span>WhatsApp Inquiry Format</span>
+                  </div>
+                  <pre className="text-slate-800 text-xs font-sans whitespace-pre-wrap max-h-44 overflow-y-auto leading-relaxed pr-1">
+                    {generatedMessage}
+                  </pre>
+                </div>
               </div>
 
-              <div className="bg-emerald-50 border border-emerald-200 rounded-lg p-3 text-xs text-emerald-900 flex items-start gap-2">
-                <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
+              <div className="bg-sky-50 border border-sky-200 rounded-lg p-3 text-xs text-sky-900 flex items-start gap-2">
+                <CheckCircle2 className="w-4 h-4 text-sky-600 shrink-0 mt-0.5" />
                 <p>
                   Clicking <strong>Continue to WhatsApp</strong> will open WhatsApp with your pre-formatted enquiry ready to send to Jess Enterprises sales team.
                 </p>
@@ -560,15 +566,15 @@ export function QuoteModal({
                 </p>
               </div>
 
-              <div className="bg-slate-50 border border-slate-200 rounded-lg p-3 text-left space-y-2">
-                <div className="flex items-center justify-between text-xs">
-                  <span className="font-bold text-slate-700 uppercase tracking-wider">
-                    WhatsApp Message Text
+              <div className="bg-emerald-50/80 border border-emerald-200/90 rounded-xl p-3.5 text-left space-y-2 shadow-2xs">
+                <div className="flex items-center justify-between text-xs border-b border-emerald-200/60 pb-1.5">
+                  <span className="font-bold text-emerald-900 flex items-center gap-1.5">
+                    <Send className="w-3.5 h-3.5 text-emerald-600" /> WhatsApp Message Text
                   </span>
                   <button
                     type="button"
                     onClick={handleCopyMessage}
-                    className="inline-flex items-center gap-1 text-xs text-sky-700 hover:text-sky-900 font-semibold"
+                    className="inline-flex items-center gap-1 text-xs text-emerald-800 hover:text-emerald-950 font-bold bg-white px-2 py-0.5 rounded border border-emerald-200"
                   >
                     {copied ? (
                       <>
@@ -581,7 +587,7 @@ export function QuoteModal({
                     )}
                   </button>
                 </div>
-                <pre className="bg-white text-slate-800 text-[11px] p-2.5 rounded border border-slate-200 font-mono whitespace-pre-wrap max-h-32 overflow-y-auto leading-relaxed">
+                <pre className="text-slate-800 text-xs font-sans whitespace-pre-wrap max-h-36 overflow-y-auto leading-relaxed pr-1">
                   {generatedMessage}
                 </pre>
               </div>
