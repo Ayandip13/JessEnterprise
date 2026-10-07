@@ -83,10 +83,13 @@ export function AdminAuthWrapper({ children }: { children: React.ReactNode }) {
       <div className="min-h-screen bg-gradient-to-br from-slate-950 via-indigo-950 to-slate-900 flex items-center justify-center p-4">
         <div className="bg-white border border-slate-200 rounded-xl p-6 sm:p-8 max-w-md w-full shadow-2xl space-y-6">
           <div className="text-center space-y-2">
-            <div className="w-12 h-12 bg-sky-700 rounded-xl flex items-center justify-center text-white mx-auto shadow-md">
-              <Scale className="w-6 h-6" />
-            </div>
-            <h1 className="text-xl font-extrabold text-slate-900">JESS ENTERPRISES</h1>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/images/jess-logo.png"
+              alt="Jess Enterprises Stamp"
+              className="w-14 h-14 object-contain mx-auto drop-shadow-md"
+            />
+            <h1 className="text-xl font-extrabold text-slate-900 font-brand">JESS ENTERPRISES</h1>
             <p className="text-xs font-bold text-sky-800 uppercase tracking-wider">
               Control Panel Authentication
             </p>
@@ -146,11 +149,14 @@ export function AdminAuthWrapper({ children }: { children: React.ReactNode }) {
       {/* Mobile Topbar Navigation Header (visible on < md) */}
       <header className="md:hidden bg-indigo-950 text-white p-4 flex items-center justify-between border-b border-indigo-900 sticky top-0 z-30">
         <Link href="/" className="flex items-center gap-2">
-          <div className="w-7 h-7 bg-sky-600 rounded flex items-center justify-center text-white font-bold">
-            <Scale className="w-4 h-4" />
-          </div>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/images/jess-logo.png"
+            alt="Jess Enterprises"
+            className="w-7 h-7 object-contain bg-white rounded-full p-0.5"
+          />
           <div>
-            <div className="font-extrabold text-xs text-white tracking-tight">JESS ADMIN</div>
+            <div className="font-extrabold text-xs text-white tracking-tight font-brand">JESS ADMIN</div>
             <div className="text-[9px] text-sky-400 font-bold uppercase">Control Panel</div>
           </div>
         </Link>
@@ -173,11 +179,14 @@ export function AdminAuthWrapper({ children }: { children: React.ReactNode }) {
       >
         <div className="hidden md:flex p-6 border-b border-indigo-900/60 items-center justify-between">
           <Link href="/" className="flex items-center gap-2.5">
-            <div className="w-8 h-8 bg-gradient-to-r from-sky-500 to-indigo-600 rounded-md flex items-center justify-center text-white font-bold shadow-xs">
-              <Scale className="w-4 h-4" />
-            </div>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/images/jess-logo.png"
+              alt="Jess Enterprises"
+              className="w-9 h-9 object-contain bg-white rounded-full p-0.5 shadow-xs"
+            />
             <div>
-              <div className="font-extrabold text-sm text-white tracking-tight">JESS ADMIN</div>
+              <div className="font-extrabold text-sm text-white tracking-tight font-brand">JESS ADMIN</div>
               <div className="text-[10px] text-sky-400 font-semibold uppercase">Control Panel</div>
             </div>
           </Link>
