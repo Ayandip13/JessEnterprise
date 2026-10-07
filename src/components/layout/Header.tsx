@@ -1,12 +1,14 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, X, Scale, Send, ShieldAlert } from "lucide-react";
+import { Menu, X, Scale, Send, ListPlus } from "lucide-react";
 import { CredentialsBar } from "./CredentialsBar";
 import { QuoteModal } from "@/components/shared/QuoteModal";
 import { Button } from "@/components/ui/Button";
+import { useEnquiry } from "@/context/EnquiryContext";
+import { CompanySettings, COMPANY_INFO } from "@/lib/catalog-data";
 
 const NAV_ITEMS = [
   { label: "Home", href: "/" },
@@ -20,7 +22,30 @@ const NAV_ITEMS = [
 export function Header() {
   const pathname = usePathname();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [quoteModalOpen, setQuoteModalOpen] = useState(false);
+  const [settings, setSettings] = useState<CompanySettings>(COMPANY_INFO);
+
+  const {
+    items,
+    totalItemsCount,
+    isModalOpen,
+    activeProduct,
+    openQuoteModal,
+    closeQuoteModal,
+  } = useEnquiry();
+
+  // Load live DB settings on mount
+  useEffect(() => {
+    fetch("/api/settings")
+      .then((res) => res.json())
+      .then((res) => {
+        if (res.success && res.data) {
+          setSettings(res.data);
+        }
+      })
+      .catch((err) => {
+        console.warn("Failed to load header settings:", err);
+      });
+  }, []);
 
   return (
     <header className="sticky top-0 z-40 bg-white border-b border-slate-200 shadow-xs">
@@ -70,16 +95,33 @@ export function Header() {
 
           {/* Actions & Quote Button */}
           <div className="hidden sm:flex items-center gap-3">
+            {/* Multi-product Enquiry List Badge if items exist */}
+            {items.length > 0 && (
+              <button
+                type="button"
+                onClick={() => openQuoteModal(null)}
+                className="relative inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold text-sky-900 bg-sky-50 border border-sky-300 rounded-md hover:bg-sky-100 transition-colors"
+                title="View multi-product enquiry list"
+              >
+                <ListPlus className="w-4 h-4 text-sky-700" />
+                <span>Enquiry List</span>
+                <span className="ml-1 bg-sky-700 text-white text-[10px] px-1.5 py-0.2 rounded-full font-mono">
+                  {totalItemsCount}
+                </span>
+              </button>
+            )}
+
             <Link
               href="/admin"
               className="text-xs text-slate-600 hover:text-slate-900 border border-slate-200 rounded px-2.5 py-1.5 hover:bg-slate-50 transition-colors font-medium"
             >
               Admin
             </Link>
+            
             <Button
               variant="primary"
               size="md"
-              onClick={() => setQuoteModalOpen(true)}
+              onClick={() => openQuoteModal(null)}
               className="font-bold tracking-wide"
             >
               <Send className="w-4 h-4" /> Request Quote
@@ -88,6 +130,20 @@ export function Header() {
 
           {/* Mobile Menu Toggle */}
           <div className="flex items-center sm:hidden gap-2">
+            {items.length > 0 && (
+              <button
+                type="button"
+                onClick={() => openQuoteModal(null)}
+                className="relative p-2 text-sky-800 bg-sky-50 border border-sky-200 rounded-md"
+                aria-label="Enquiry List"
+              >
+                <ListPlus className="w-5 h-5" />
+                <span className="absolute -top-1 -right-1 bg-sky-700 text-white text-[9px] w-4 h-4 rounded-full flex items-center justify-center font-bold">
+                  {totalItemsCount}
+                </span>
+              </button>
+            )}
+
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               className="p-2 text-slate-700 hover:text-slate-900 hover:bg-slate-100 rounded-md focus:outline-none"
@@ -122,7 +178,7 @@ export function Header() {
               size="md"
               onClick={() => {
                 setMobileMenuOpen(false);
-                setQuoteModalOpen(true);
+                openQuoteModal(null);
               }}
               className="w-full justify-center"
             >
@@ -140,7 +196,14 @@ export function Header() {
       )}
 
       {/* Reusable Quote Modal */}
-      <QuoteModal isOpen={quoteModalOpen} onClose={() => setQuoteModalOpen(false)} />
+      <QuoteModal
+        product={activeProduct}
+        isOpen={isModalOpen}
+        onClose={closeQuoteModal}
+        whatsAppNumber={settings.whatsAppNumber}
+        companyPhone={settings.phoneOffice}
+        companyEmail={settings.primaryEmail}
+      />
     </header>
   );
 }

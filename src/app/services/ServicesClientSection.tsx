@@ -1,10 +1,10 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import { Send, CheckCircle2, ShieldCheck, Wrench, Boxes } from "lucide-react";
 import { CatalogService } from "@/lib/catalog-data";
 import { Button } from "@/components/ui/Button";
-import { QuoteModal } from "@/components/shared/QuoteModal";
+import { useEnquiry } from "@/context/EnquiryContext";
 
 interface ServicesClientSectionProps {
   services: CatalogService[];
@@ -13,15 +13,8 @@ interface ServicesClientSectionProps {
 
 export function ServicesClientSection({
   services,
-  whatsAppNumber,
 }: ServicesClientSectionProps) {
-  const [quoteModalOpen, setQuoteModalOpen] = useState(false);
-  const [selectedService, setSelectedService] = useState<string>("");
-
-  const handleEnquireService = (title: string) => {
-    setSelectedService(title);
-    setQuoteModalOpen(true);
-  };
+  const { openQuoteModal } = useEnquiry();
 
   const getIcon = (idx: number) => {
     if (idx === 0) return ShieldCheck;
@@ -69,21 +62,15 @@ export function ServicesClientSection({
               <Button
                 variant="primary"
                 size="md"
-                onClick={() => handleEnquireService(service.title)}
+                onClick={() => openQuoteModal(null)}
                 className="w-full justify-center font-bold"
               >
-                <Send className="w-4 h-4" /> Enquire Service
+                <Send className="w-4 h-4" /> Request Quote for Service
               </Button>
             </div>
           );
         })}
       </div>
-
-      <QuoteModal
-        isOpen={quoteModalOpen}
-        onClose={() => setQuoteModalOpen(false)}
-        whatsAppNumber={whatsAppNumber}
-      />
     </div>
   );
 }

@@ -2,12 +2,12 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import { Send, ArrowRight, ShieldCheck, Check } from "lucide-react";
+import { Send, ArrowRight, ShieldCheck, Plus, Check } from "lucide-react";
 import { CatalogProduct } from "@/lib/catalog-data";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
-import { QuoteModal } from "@/components/shared/QuoteModal";
 import { InstrumentVisual } from "./InstrumentVisual";
+import { useEnquiry } from "@/context/EnquiryContext";
 
 interface ProductCardProps {
   product: CatalogProduct;
@@ -15,7 +15,18 @@ interface ProductCardProps {
 }
 
 export function ProductCard({ product, whatsAppNumber }: ProductCardProps) {
-  const [quoteModalOpen, setQuoteModalOpen] = useState(false);
+  const { openQuoteModal, addItem, isItemInEnquiry } = useEnquiry();
+  const [addedTemp, setAddedTemp] = useState(false);
+
+  const handleAddToEnquiry = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    addItem(product, 1);
+    setAddedTemp(true);
+    setTimeout(() => setAddedTemp(false), 2000);
+  };
+
+  const inEnquiry = isItemInEnquiry(product.id) || isItemInEnquiry(product.slug);
 
   return (
     <div className="bg-white border border-slate-200 rounded-lg shadow-2xs hover:shadow-md transition-all duration-200 flex flex-col h-full overflow-hidden group">
@@ -65,30 +76,48 @@ export function ProductCard({ product, whatsAppNumber }: ProductCardProps) {
       </div>
 
       {/* Card Actions Footer */}
-      <div className="bg-slate-50 px-5 py-3 border-t border-slate-100 flex items-center justify-between gap-2">
+      <div className="bg-slate-50 px-4 py-3 border-t border-slate-100 flex items-center justify-between gap-2 flex-wrap sm:flex-nowrap">
         <Link
           href={`/products/${product.slug}`}
-          className="text-xs font-bold text-sky-700 hover:text-sky-900 inline-flex items-center gap-1 transition-colors"
+          className="text-xs font-bold text-sky-700 hover:text-sky-900 inline-flex items-center gap-1 transition-colors shrink-0"
         >
           View Specs <ArrowRight className="w-3.5 h-3.5" />
         </Link>
-        <Button
-          variant="primary"
-          size="sm"
-          onClick={() => setQuoteModalOpen(true)}
-          className="font-semibold"
-        >
-          <Send className="w-3.5 h-3.5" /> Enquire
-        </Button>
-      </div>
 
-      {/* Modal */}
-      <QuoteModal
-        product={product}
-        isOpen={quoteModalOpen}
-        onClose={() => setQuoteModalOpen(false)}
-        whatsAppNumber={whatsAppNumber}
-      />
+        <div className="flex items-center gap-1.5 shrink-0">
+          <button
+            type="button"
+            onClick={handleAddToEnquiry}
+            title="Add to multi-product enquiry list"
+            className={`p-1.5 text-xs font-medium rounded border transition-colors flex items-center gap-1 ${
+              inEnquiry || addedTemp
+                ? "bg-emerald-50 text-emerald-700 border-emerald-300"
+                : "bg-white text-slate-700 border-slate-300 hover:bg-slate-100"
+            }`}
+          >
+            {addedTemp || inEnquiry ? (
+              <>
+                <Check className="w-3.5 h-3.5 text-emerald-600" />
+                <span className="hidden sm:inline text-[11px]">In List</span>
+              </>
+            ) : (
+              <>
+                <Plus className="w-3.5 h-3.5" />
+                <span className="hidden sm:inline text-[11px]">Add</span>
+              </>
+            )}
+          </button>
+
+          <Button
+            variant="primary"
+            size="sm"
+            onClick={() => openQuoteModal(product)}
+            className="font-semibold text-xs py-1 px-2.5"
+          >
+            <Send className="w-3.5 h-3.5" /> Enquire
+          </Button>
+        </div>
+      </div>
     </div>
   );
 }
