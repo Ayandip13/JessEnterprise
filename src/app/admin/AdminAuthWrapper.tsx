@@ -24,6 +24,7 @@ export function AdminAuthWrapper({ children }: { children: React.ReactNode }) {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
+  const [showLogoutModal, setShowLogoutModal] = useState(false);
 
   useEffect(() => {
     const savedToken = localStorage.getItem(ADMIN_STORAGE_KEY);
@@ -89,7 +90,7 @@ export function AdminAuthWrapper({ children }: { children: React.ReactNode }) {
               alt="Jess Enterprises Stamp"
               className="w-14 h-14 object-contain mx-auto drop-shadow-md"
             />
-            <h1 className="text-xl font-extrabold text-slate-900 font-brand">JESS ENTERPRISES</h1>
+            <h1 className="text-xl font-extrabold text-slate-900 font-brand">Jess Enterprises</h1>
             <p className="text-xs font-bold text-sky-800 uppercase tracking-wider">
               Control Panel Authentication
             </p>
@@ -148,18 +149,27 @@ export function AdminAuthWrapper({ children }: { children: React.ReactNode }) {
     <div className="min-h-screen bg-slate-50 flex flex-col md:flex-row text-slate-900">
       {/* Mobile Topbar Navigation Header (visible on < md) */}
       <header className="md:hidden bg-indigo-950 text-white p-4 flex items-center justify-between border-b border-indigo-900 sticky top-0 z-30">
-        <Link href="/admin" className="flex items-center gap-2">
+        <button
+          type="button"
+          onClick={() => setShowLogoutModal(true)}
+          className="flex items-center gap-2.5 text-left focus:outline-none group"
+          title="Click to Logout & Exit to Website"
+        >
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src="/images/jess-logo.png"
             alt="Jess Enterprises"
-            className="w-7 h-7 object-contain bg-white rounded-full p-0.5"
+            className="w-8 h-8 object-contain bg-white rounded-full p-0.5 group-hover:scale-105 transition-transform"
           />
-          <div>
-            <div className="font-extrabold text-xs text-white tracking-tight font-brand">JESS ADMIN</div>
-            <div className="text-[9px] text-sky-400 font-bold uppercase">Control Panel</div>
+          <div className="flex flex-col">
+            <span className="font-brand font-bold text-sm text-white tracking-wide leading-tight group-hover:text-sky-300 transition-colors">
+              Jess Enterprises
+            </span>
+            <span className="text-[9px] text-sky-400 font-extrabold uppercase tracking-widest">
+              Control Panel
+            </span>
           </div>
-        </Link>
+        </button>
 
         <button
           type="button"
@@ -177,19 +187,28 @@ export function AdminAuthWrapper({ children }: { children: React.ReactNode }) {
           mobileSidebarOpen ? "block" : "hidden"
         } md:block w-full md:w-64 bg-gradient-to-b from-indigo-950 via-slate-900 to-indigo-950 text-slate-200 border-r border-indigo-900 flex-col shrink-0 md:min-h-screen shadow-sm`}
       >
-        <div className="hidden md:flex p-6 border-b border-indigo-900/60 items-center justify-between">
-          <Link href="/admin" className="flex items-center gap-2.5">
+        <div className="hidden md:flex p-5 border-b border-indigo-900/60 items-center justify-between">
+          <button
+            type="button"
+            onClick={() => setShowLogoutModal(true)}
+            className="flex items-center gap-3 text-left focus:outline-none group"
+            title="Click to Logout & Exit to Website"
+          >
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src="/images/jess-logo.png"
               alt="Jess Enterprises"
-              className="w-9 h-9 object-contain bg-white rounded-full p-0.5 shadow-xs"
+              className="w-10 h-10 object-contain bg-white rounded-full p-0.5 shadow-xs group-hover:scale-105 transition-transform"
             />
-            <div>
-              <div className="font-extrabold text-sm text-white tracking-tight font-brand">JESS ADMIN</div>
-              <div className="text-[10px] text-sky-400 font-semibold uppercase">Control Panel</div>
+            <div className="flex flex-col">
+              <span className="font-brand font-bold text-base text-white tracking-wide leading-tight group-hover:text-sky-300 transition-colors">
+                Jess Enterprises
+              </span>
+              <span className="text-[9px] text-sky-400 font-extrabold uppercase tracking-widest mt-0.5">
+                Admin Control Panel
+              </span>
             </div>
-          </Link>
+          </button>
         </div>
 
         <nav className="p-3 sm:p-4 space-y-1 flex-1">
@@ -214,27 +233,67 @@ export function AdminAuthWrapper({ children }: { children: React.ReactNode }) {
           })}
         </nav>
 
-        <div className="p-4 border-t border-indigo-900/60 space-y-2">
+        <div className="p-4 border-t border-indigo-900/60">
           <button
             onClick={() => {
               setMobileSidebarOpen(false);
-              handleLogout();
+              setShowLogoutModal(true);
             }}
-            className="w-full flex items-center gap-2 text-xs text-red-400 hover:text-red-300 hover:bg-indigo-900/60 px-3 py-2 rounded-md transition-colors font-semibold"
+            className="w-full flex items-center justify-center gap-2 text-xs text-red-300 bg-red-950/40 hover:bg-red-900/70 border border-red-900/60 px-3 py-2.5 rounded-md transition-colors font-bold shadow-2xs"
           >
-            <LogOut className="w-4 h-4" /> Lock / Logout Admin
+            <LogOut className="w-4 h-4 text-red-400" /> Lock / Logout Admin
           </button>
-          <Link
-            href="/"
-            className="flex items-center gap-2 text-xs text-slate-400 hover:text-white px-3 py-1 transition-colors"
-          >
-            <ArrowLeft className="w-3.5 h-3.5" /> Back to Main Website
-          </Link>
         </div>
       </aside>
 
       {/* Main Content Area */}
       <main className="flex-1 p-3 sm:p-6 lg:p-8 overflow-x-hidden min-w-0">{children}</main>
+
+      {/* Logout Confirmation Modal */}
+      {showLogoutModal && (
+        <div className="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-xs flex items-center justify-center p-4 animate-in fade-in duration-200">
+          <div className="bg-white border border-slate-200 rounded-2xl max-w-md w-full p-6 shadow-2xl space-y-5 transform animate-in zoom-in-95 duration-200">
+            <div className="flex items-center gap-3 border-b border-slate-100 pb-4">
+              <div className="w-10 h-10 bg-red-100 text-red-600 rounded-xl flex items-center justify-center shrink-0">
+                <LogOut className="w-5 h-5" />
+              </div>
+              <div>
+                <h3 className="text-lg font-extrabold text-slate-900 font-brand">
+                  Logout & Lock Admin Panel?
+                </h3>
+                <p className="text-xs text-slate-500">Jess Enterprises Control Panel</p>
+              </div>
+            </div>
+
+            <p className="text-xs text-slate-600 leading-relaxed">
+              Are you sure you want to end your administrative session? You will be logged out and returned to the public website.
+            </p>
+
+            <div className="flex items-center justify-end gap-3 pt-2">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => setShowLogoutModal(false)}
+                className="font-semibold text-slate-700"
+              >
+                Cancel
+              </Button>
+              <Button
+                variant="primary"
+                size="sm"
+                onClick={() => {
+                  setShowLogoutModal(false);
+                  handleLogout();
+                  window.location.href = "/";
+                }}
+                className="bg-red-600 hover:bg-red-700 text-white font-bold border-red-600"
+              >
+                <LogOut className="w-4 h-4" /> Yes, Logout & Exit
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
