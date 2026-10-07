@@ -451,25 +451,28 @@ export function ProductManagerClient({
             </div>
 
             {specifications.map((spec, idx) => (
-              <div key={idx} className="flex items-center gap-2">
+              <div
+                key={idx}
+                className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 bg-slate-50 sm:bg-transparent p-2.5 sm:p-0 rounded-md border sm:border-0 border-slate-200"
+              >
                 <input
                   type="text"
                   placeholder="Spec Name (e.g. Speed / Capacity)"
                   value={spec.name}
                   onChange={(e) => handleSpecChange(idx, "name", e.target.value)}
-                  className="w-1/3 text-xs border border-slate-300 rounded px-2.5 py-1.5 focus:ring-2 focus:ring-sky-500 focus:outline-none"
+                  className="w-full sm:w-1/3 text-xs border border-slate-300 rounded px-2.5 py-1.5 focus:ring-2 focus:ring-sky-500 focus:outline-none"
                 />
                 <input
                   type="text"
                   placeholder="Spec Value (e.g. 12000 rpm / 500g)"
                   value={spec.value}
                   onChange={(e) => handleSpecChange(idx, "value", e.target.value)}
-                  className="w-2/3 text-xs border border-slate-300 rounded px-2.5 py-1.5 focus:ring-2 focus:ring-sky-500 focus:outline-none"
+                  className="w-full sm:w-2/3 text-xs border border-slate-300 rounded px-2.5 py-1.5 focus:ring-2 focus:ring-sky-500 focus:outline-none"
                 />
                 <button
                   type="button"
                   onClick={() => handleRemoveSpec(idx)}
-                  className="text-slate-400 hover:text-red-600 p-1"
+                  className="text-slate-400 hover:text-red-600 p-1.5 self-end sm:self-center"
                 >
                   <Trash2 className="w-4 h-4" />
                 </button>
@@ -491,7 +494,7 @@ export function ProductManagerClient({
       {/* Products List Table */}
       <div className="bg-white border border-slate-200 rounded-lg overflow-hidden shadow-2xs">
         <div className="overflow-x-auto">
-          <table className="w-full text-left text-xs">
+          <table className="w-full text-left text-xs min-w-[640px]">
             <thead className="bg-slate-50 text-slate-700 uppercase font-bold border-b border-slate-200">
               <tr>
                 <th className="px-4 py-3">Sr No</th>

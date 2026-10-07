@@ -343,7 +343,7 @@ export default function CustomerManagerClient({ initialClients = [] }: CustomerM
       {/* Customers List Table */}
       <div className="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-2xs">
         <div className="overflow-x-auto">
-          <table className="w-full text-left text-xs">
+          <table className="w-full text-left text-xs min-w-[500px]">
             <thead className="bg-slate-50 text-slate-700 uppercase font-bold border-b border-slate-200">
               <tr>
                 <th className="px-4 py-3">Order</th>

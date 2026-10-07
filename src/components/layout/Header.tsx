@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, X, Scale, Send, ListPlus } from "lucide-react";
+import { Menu, X, Scale, Send, ListPlus, ShieldCheck } from "lucide-react";
 import { CredentialsBar } from "./CredentialsBar";
 import { QuoteModal } from "@/components/shared/QuoteModal";
 import { Button } from "@/components/ui/Button";
@@ -51,23 +51,23 @@ export function Header() {
     <header className="sticky top-0 z-40 bg-white border-b border-slate-200 shadow-xs">
       <CredentialsBar />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-20">
+      <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between h-16 sm:h-20 gap-2">
           {/* Company Brand Logo */}
-          <Link href="/" className="flex items-center gap-3 group">
-            <div className="w-11 h-11 bg-sky-700 rounded-md flex items-center justify-center text-white font-bold shadow-xs group-hover:bg-sky-800 transition-colors">
-              <Scale className="w-6 h-6" />
+          <Link href="/" className="flex items-center gap-2 sm:gap-3 group shrink-0">
+            <div className="w-9 h-9 sm:w-11 sm:h-11 bg-sky-700 rounded-md flex items-center justify-center text-white font-bold shadow-xs group-hover:bg-sky-800 transition-colors shrink-0">
+              <Scale className="w-5 h-5 sm:w-6 sm:h-6" />
             </div>
-            <div>
-              <div className="flex items-center gap-2">
-                <span className="text-xl font-extrabold tracking-tight text-slate-900 group-hover:text-sky-800 transition-colors">
+            <div className="min-w-0">
+              <div className="flex items-center gap-1.5">
+                <span className="text-sm sm:text-lg lg:text-xl font-extrabold tracking-tight text-slate-900 group-hover:text-sky-800 transition-colors truncate">
                   JESS ENTERPRISES
                 </span>
-                <span className="hidden sm:inline-block bg-sky-100 text-sky-800 text-[10px] uppercase font-bold px-1.5 py-0.5 rounded border border-sky-200">
+                <span className="hidden xl:inline-block bg-sky-100 text-sky-800 text-[10px] uppercase font-bold px-1.5 py-0.5 rounded border border-sky-200 shrink-0">
                   Legal Metrology
                 </span>
               </div>
-              <span className="block text-xs font-semibold text-sky-700 tracking-wider uppercase">
+              <span className="block text-[10px] sm:text-xs font-semibold text-sky-700 tracking-wider uppercase truncate">
                 Innovative Services
               </span>
             </div>
@@ -81,7 +81,7 @@ export function Header() {
                 <Link
                   key={item.href}
                   href={item.href}
-                  className={`px-3 py-2 text-sm font-semibold rounded-md transition-colors ${
+                  className={`px-2.5 py-2 text-xs xl:text-sm font-semibold rounded-md transition-colors whitespace-nowrap ${
                     isActive
                       ? "text-sky-800 bg-sky-50 font-bold"
                       : "text-slate-700 hover:text-sky-700 hover:bg-slate-50"
@@ -93,14 +93,14 @@ export function Header() {
             })}
           </nav>
 
-          {/* Actions & Quote Button */}
-          <div className="hidden sm:flex items-center gap-3">
+          {/* Actions & Quote Button (Desktop & Laptop) */}
+          <div className="hidden lg:flex items-center gap-2 xl:gap-3 shrink-0">
             {/* Multi-product Enquiry List Badge if items exist */}
             {items.length > 0 && (
               <button
                 type="button"
                 onClick={() => openQuoteModal(null)}
-                className="relative inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold text-sky-900 bg-sky-50 border border-sky-300 rounded-md hover:bg-sky-100 transition-colors"
+                className="relative inline-flex items-center gap-1.5 px-2.5 py-1.5 text-xs font-bold text-sky-900 bg-sky-50 border border-sky-300 rounded-md hover:bg-sky-100 transition-colors shrink-0"
                 title="View multi-product enquiry list"
               >
                 <ListPlus className="w-4 h-4 text-sky-700" />
@@ -113,32 +113,33 @@ export function Header() {
 
             <Link
               href="/admin"
-              className="text-xs text-slate-600 hover:text-slate-900 border border-slate-200 rounded px-2.5 py-1.5 hover:bg-slate-50 transition-colors font-medium"
+              className="text-xs text-slate-600 hover:text-slate-900 border border-slate-200 rounded px-2.5 py-1.5 hover:bg-slate-50 transition-colors font-medium shrink-0"
             >
               Admin
             </Link>
-            
+
             <Button
               variant="primary"
               size="md"
               onClick={() => openQuoteModal(null)}
-              className="font-bold tracking-wide"
+              className="font-bold tracking-wide text-xs xl:text-sm py-2 px-3 xl:px-4 shrink-0"
             >
               <Send className="w-4 h-4" /> Request Quote
             </Button>
           </div>
 
-          {/* Mobile Menu Toggle */}
-          <div className="flex items-center sm:hidden gap-2">
+          {/* Mobile & Tablet Controls */}
+          <div className="flex items-center lg:hidden gap-1.5 sm:gap-2 shrink-0">
+            {/* Quick Enquiry Badge on Mobile */}
             {items.length > 0 && (
               <button
                 type="button"
                 onClick={() => openQuoteModal(null)}
-                className="relative p-2 text-sky-800 bg-sky-50 border border-sky-200 rounded-md"
+                className="relative p-2 text-sky-800 bg-sky-50 border border-sky-300 rounded-md shrink-0 min-h-[40px] min-w-[40px] flex items-center justify-center"
                 aria-label="Enquiry List"
               >
-                <ListPlus className="w-5 h-5" />
-                <span className="absolute -top-1 -right-1 bg-sky-700 text-white text-[9px] w-4 h-4 rounded-full flex items-center justify-center font-bold">
+                <ListPlus className="w-5 h-5 text-sky-700" />
+                <span className="absolute -top-1 -right-1 bg-sky-700 text-white text-[10px] min-w-[18px] h-[18px] px-1 rounded-full flex items-center justify-center font-bold font-mono">
                   {totalItemsCount}
                 </span>
               </button>
@@ -146,33 +147,34 @@ export function Header() {
 
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2 text-slate-700 hover:text-slate-900 hover:bg-slate-100 rounded-md focus:outline-none"
+              className="p-2 text-slate-700 hover:text-slate-900 hover:bg-slate-100 rounded-md focus:outline-none min-h-[40px] min-w-[40px] flex items-center justify-center"
               aria-label="Toggle Navigation Menu"
             >
-              {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+              {mobileMenuOpen ? <X className="w-6 h-6 text-slate-900" /> : <Menu className="w-6 h-6 text-slate-900" />}
             </button>
           </div>
         </div>
       </div>
 
-      {/* Mobile Drawer Navigation */}
+      {/* Mobile / Tablet Drawer Navigation */}
       {mobileMenuOpen && (
-        <div className="lg:hidden border-t border-slate-200 bg-slate-50 px-4 pt-3 pb-6 space-y-2">
+        <div className="lg:hidden border-t border-slate-200 bg-white px-4 pt-3 pb-6 space-y-1 shadow-lg max-h-[calc(100vh-80px)] overflow-y-auto">
           {NAV_ITEMS.map((item) => (
             <Link
               key={item.href}
               href={item.href}
               onClick={() => setMobileMenuOpen(false)}
-              className={`block px-3 py-2.5 rounded-md text-base font-semibold ${
+              className={`block px-3.5 py-3 rounded-md text-sm sm:text-base font-semibold transition-colors ${
                 pathname === item.href
-                  ? "text-sky-800 bg-sky-100"
+                  ? "text-sky-800 bg-sky-50 font-bold"
                   : "text-slate-800 hover:bg-slate-100"
               }`}
             >
               {item.label}
             </Link>
           ))}
-          <div className="pt-4 border-t border-slate-200 flex flex-col gap-2">
+
+          <div className="pt-4 mt-2 border-t border-slate-200 flex flex-col gap-2.5">
             <Button
               variant="primary"
               size="md"
@@ -180,17 +182,32 @@ export function Header() {
                 setMobileMenuOpen(false);
                 openQuoteModal(null);
               }}
-              className="w-full justify-center"
+              className="w-full justify-center py-3 font-bold text-sm"
             >
               <Send className="w-4 h-4" /> Request Quote via WhatsApp
             </Button>
-            <Link
-              href="/admin"
-              onClick={() => setMobileMenuOpen(false)}
-              className="text-center text-xs text-slate-600 py-2 border border-slate-300 rounded font-medium bg-white"
-            >
-              Admin Portal
-            </Link>
+
+            <div className="flex items-center gap-2 pt-1">
+              <Link
+                href="/admin"
+                onClick={() => setMobileMenuOpen(false)}
+                className="flex-1 text-center text-xs text-slate-600 py-2.5 border border-slate-300 rounded-md font-semibold bg-slate-50 hover:bg-slate-100"
+              >
+                Admin Portal
+              </Link>
+              {items.length > 0 && (
+                <button
+                  type="button"
+                  onClick={() => {
+                    setMobileMenuOpen(false);
+                    openQuoteModal(null);
+                  }}
+                  className="flex-1 text-center text-xs text-sky-800 font-bold py-2.5 border border-sky-300 rounded-md bg-sky-50 hover:bg-sky-100"
+                >
+                  Enquiry List ({totalItemsCount})
+                </button>
+              )}
+            </div>
           </div>
         </div>
       )}
