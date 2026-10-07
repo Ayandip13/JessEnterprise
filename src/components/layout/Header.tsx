@@ -53,22 +53,25 @@ export function Header() {
 
       <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 sm:h-20 gap-2">
-          {/* Company Brand Logo */}
-          <Link href="/" className="flex items-center gap-2 sm:gap-3 group shrink-0">
-            <div className="w-9 h-9 sm:w-11 sm:h-11 bg-sky-700 rounded-md flex items-center justify-center text-white font-bold shadow-xs group-hover:bg-sky-800 transition-colors shrink-0">
-              <Scale className="w-5 h-5 sm:w-6 sm:h-6" />
-            </div>
+          {/* Company Brand Logo & Calligraphic Title */}
+          <Link href="/" className="flex items-center gap-2.5 sm:gap-3.5 group shrink-0">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/images/jess-logo.png"
+              alt="Jess Enterprises Logo"
+              className="w-10 h-10 sm:w-13 sm:h-13 object-contain transition-transform group-hover:scale-105 shrink-0"
+            />
             <div className="min-w-0">
               <div className="flex items-center gap-1.5">
-                <span className="text-sm sm:text-lg lg:text-xl font-extrabold tracking-tight text-slate-900 group-hover:text-sky-800 transition-colors truncate">
-                  JESS ENTERPRISES
+                <span className="font-brand italic text-base sm:text-xl lg:text-2xl font-bold tracking-tight text-sky-950 group-hover:text-sky-800 transition-colors truncate">
+                  Jess Enterprises
                 </span>
                 <span className="hidden xl:inline-block bg-sky-100 text-sky-800 text-[10px] uppercase font-bold px-1.5 py-0.5 rounded border border-sky-200 shrink-0">
                   Legal Metrology
                 </span>
               </div>
               <span className="block text-[10px] sm:text-xs font-semibold text-sky-700 tracking-wider uppercase truncate">
-                Innovative Services
+                Innovative Services • Goa
               </span>
             </div>
           </Link>

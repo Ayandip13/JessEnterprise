@@ -11,12 +11,15 @@ export function Footer() {
           {/* Column 1: Company Profile & Licensing */}
           <div className="space-y-4">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-gradient-to-r from-sky-600 to-indigo-700 rounded-md flex items-center justify-center text-white font-bold shadow-xs">
-                <Scale className="w-5 h-5" />
-              </div>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/images/jess-logo.png"
+                alt="Jess Enterprises Logo"
+                className="w-12 h-12 object-contain shrink-0"
+              />
               <div>
-                <h3 className="text-lg font-extrabold text-slate-900 tracking-tight">
-                  {COMPANY_INFO.companyName}
+                <h3 className="font-brand italic text-xl font-bold text-slate-900 tracking-tight">
+                  Jess Enterprises
                 </h3>
                 <p className="text-xs text-sky-700 font-semibold tracking-wider uppercase">
                   {COMPANY_INFO.tagline}
