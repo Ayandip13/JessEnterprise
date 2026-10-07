@@ -4,7 +4,7 @@ import { isValidAdminPassword } from "@/lib/auth";
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-    const { password } = body;
+    const password = (body.password || body.passcode || "").trim();
 
     if (!password) {
       return NextResponse.json(
