@@ -363,15 +363,20 @@ export default function CustomerManagerClient({ initialClients = [] }: CustomerM
                 <tr key={c.id || idx} className="hover:bg-slate-50">
                   <td className="px-4 py-3 font-mono text-slate-500">{c.order || idx + 1}</td>
                   <td className="px-4 py-3">
-                    {c.logoUrl ? (
-                      <div className="w-10 h-8 bg-slate-100 rounded border border-slate-200 p-0.5 flex items-center justify-center overflow-hidden">
-                        <img src={c.logoUrl} alt={c.name} className="max-h-full max-w-full object-contain" />
-                      </div>
-                    ) : (
-                      <div className="w-10 h-8 bg-sky-50 text-sky-800 rounded border border-sky-200 flex items-center justify-center font-bold text-[10px]">
-                        <Building2 className="w-4 h-4" />
-                      </div>
-                    )}
+                    <div className="w-10 h-8 bg-slate-100 rounded border border-slate-200 p-0.5 flex items-center justify-center overflow-hidden relative">
+                      {c.logoUrl ? (
+                        /* eslint-disable-next-line @next/next/no-img-element */
+                        <img
+                          src={c.logoUrl}
+                          alt={c.name}
+                          onError={(e) => {
+                            e.currentTarget.style.display = "none";
+                          }}
+                          className="max-h-full max-w-full object-contain"
+                        />
+                      ) : null}
+                      <Building2 className="w-4 h-4 text-sky-800 absolute -z-10" />
+                    </div>
                   </td>
                   <td className="px-4 py-3 font-bold text-slate-900">{c.name}</td>
                   <td className="px-4 py-3 text-slate-600">{c.industry}</td>

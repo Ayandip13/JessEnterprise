@@ -497,17 +497,19 @@ export function ProductManagerClient({
                 <tr key={p.id} className="hover:bg-slate-50">
                   <td className="px-4 py-3 font-mono text-slate-500">{idx + 1}</td>
                   <td className="px-4 py-3">
-                    <div className="w-10 h-10 bg-slate-100 border border-slate-200 rounded flex items-center justify-center overflow-hidden">
+                    <div className="w-10 h-10 bg-slate-100 border border-slate-200 rounded flex items-center justify-center overflow-hidden relative">
                       {p.images?.[0] ? (
                         /* eslint-disable-next-line @next/next/no-img-element */
                         <img
                           src={p.images[0]}
                           alt={p.name}
+                          onError={(e) => {
+                            e.currentTarget.style.display = "none";
+                          }}
                           className="w-full h-full object-cover"
                         />
-                      ) : (
-                        <ImageIcon className="w-4 h-4 text-slate-400" />
-                      )}
+                      ) : null}
+                      <ImageIcon className="w-4 h-4 text-slate-400 absolute -z-10" />
                     </div>
                   </td>
                   <td className="px-4 py-3 font-bold text-slate-900 max-w-xs">
