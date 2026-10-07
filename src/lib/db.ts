@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 const DEFAULT_MONGODB_URI =
-  "mongodb+srv://ayandippaul284_db_user:pRhEzOoo719skXuO@cluster0.gz6ap2w.mongodb.net/jess_metrology?retryWrites=true&w=majority";
+  "mongodb+srv://ayandippaul2002_db_user:NpiQQqF2jpWqyXlw@cluster0.ollutmb.mongodb.net/jess_metrology?retryWrites=true&w=majority";
 
 interface MongooseCache {
   conn: typeof mongoose | null;
