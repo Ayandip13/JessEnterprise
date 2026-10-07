@@ -29,27 +29,27 @@ export default async function ProductsPage({
       <main className="flex-1 py-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Header Banner */}
-          <div className="bg-slate-900 text-white rounded-lg p-6 sm:p-8 mb-8 border border-slate-800 flex flex-col md:flex-row md:items-center justify-between gap-6">
+          <div className="bg-gradient-to-r from-sky-600 via-indigo-700 to-indigo-900 text-white rounded-xl p-6 sm:p-8 mb-8 border border-indigo-600/30 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-6">
             <div>
-              <div className="inline-flex items-center gap-1.5 bg-sky-950 text-sky-400 text-xs font-bold px-2.5 py-1 rounded border border-sky-800 mb-2">
-                <Scale className="w-3.5 h-3.5 text-sky-400" />
+              <div className="inline-flex items-center gap-1.5 bg-indigo-950/60 text-sky-200 text-xs font-bold px-3 py-1 rounded-full border border-sky-400/40 mb-2">
+                <Scale className="w-3.5 h-3.5 text-sky-300" />
                 Complete Product & Equipment Catalog
               </div>
-              <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight">
+              <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-white">
                 Laboratory & Metrology Equipment
               </h1>
-              <p className="text-xs sm:text-sm text-slate-300 mt-1 max-w-2xl">
+              <p className="text-xs sm:text-sm text-sky-100 mt-1 max-w-2xl">
                 Browse our complete catalog of precision analytical instruments, Legal Metrology authorized balances, calibration weights, and custom fabrication solutions.
               </p>
             </div>
 
-            <div className="bg-slate-800 p-4 rounded border border-slate-700 text-xs shrink-0 space-y-1">
-              <div className="flex items-center gap-1.5 text-sky-300 font-bold">
-                <ShieldCheck className="w-4 h-4 text-sky-400" />
+            <div className="bg-indigo-950/70 p-4 rounded-lg border border-indigo-500/40 text-xs shrink-0 space-y-1">
+              <div className="flex items-center gap-1.5 text-sky-200 font-bold">
+                <ShieldCheck className="w-4 h-4 text-sky-300" />
                 Legal Metrology License
               </div>
-              <div className="text-slate-200 font-mono">Lic.No. – {settings.legalMetrologyLicNo}</div>
-              <div className="text-slate-400 text-[11px]">NABL Weights & Stamping Certificated</div>
+              <div className="text-amber-300 font-mono font-bold">Lic.No. – {settings.legalMetrologyLicNo}</div>
+              <div className="text-sky-100 text-[11px]">NABL Weights & Stamping Certificated</div>
             </div>
           </div>
 

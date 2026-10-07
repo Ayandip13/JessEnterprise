@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { Boxes, Layers, CheckCircle2, Send, Wrench } from "lucide-react";
+import { Boxes, CheckCircle2, Send, Wrench } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { QuoteModal } from "@/components/shared/QuoteModal";
 
@@ -22,7 +22,7 @@ export function FabricationSection() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
           {/* Left info */}
           <div className="lg:col-span-7 space-y-6">
-            <div className="inline-flex items-center gap-1.5 bg-slate-100 border border-slate-300 text-slate-800 text-xs font-bold px-3 py-1 rounded">
+            <div className="inline-flex items-center gap-1.5 bg-sky-50 border border-sky-200 text-sky-900 text-xs font-bold px-3 py-1 rounded">
               <Wrench className="w-3.5 h-3.5 text-sky-700" />
               Custom Engineering & Fabrication Work
             </div>
@@ -65,8 +65,8 @@ export function FabricationSection() {
 
           {/* Right Highlight Box: HPLC Storage & Custom Cabinet showcase */}
           <div className="lg:col-span-5">
-            <div className="bg-sky-900 text-white rounded-lg p-6 shadow-md space-y-5 border border-sky-800">
-              <div className="flex items-center justify-between pb-3 border-b border-sky-800">
+            <div className="bg-gradient-to-br from-sky-800 via-indigo-900 to-indigo-950 text-white rounded-xl p-6 shadow-md space-y-5 border border-indigo-700">
+              <div className="flex items-center justify-between pb-3 border-b border-indigo-700/60">
                 <span className="text-xs font-bold uppercase tracking-wider text-sky-300">
                   Featured Fabrication Product
                 </span>
@@ -81,10 +81,10 @@ export function FabricationSection() {
                   Organized, vibration-dampened cabinets engineered specifically for protective storage of sensitive HPLC and GC chromatography columns in pharmaceutical QC laboratories.
                 </p>
 
-                <div className="bg-sky-950/80 rounded p-4 border border-sky-700/60 space-y-2 text-xs">
+                <div className="bg-indigo-950/80 rounded-lg p-4 border border-indigo-800 space-y-2 text-xs">
                   <div className="flex justify-between items-center text-sky-200">
                     <span>Available Drawer Capacities:</span>
-                    <strong className="text-white font-mono bg-sky-800 px-2 py-0.5 rounded">
+                    <strong className="text-white font-mono bg-indigo-800 px-2 py-0.5 rounded">
                       60 pcs & 72 pcs
                     </strong>
                   </div>
@@ -101,7 +101,7 @@ export function FabricationSection() {
 
               <button
                 onClick={() => setQuoteModalOpen(true)}
-                className="w-full bg-white text-sky-900 hover:bg-sky-50 font-bold text-xs py-2.5 rounded transition-colors text-center block"
+                className="w-full bg-white text-indigo-950 hover:bg-sky-50 font-bold text-xs py-2.5 rounded-lg transition-colors text-center block shadow-xs"
               >
                 Enquire HPLC Storage Cabinets
               </button>

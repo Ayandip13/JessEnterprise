@@ -15,14 +15,14 @@ export function Button({
   ...props
 }: ButtonProps) {
   const baseStyle =
-    "inline-flex items-center justify-center font-medium rounded-md transition-all focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none cursor-pointer";
+    "inline-flex items-center justify-center font-medium rounded-md transition-all duration-150 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none cursor-pointer";
 
   const variants = {
-    primary: "bg-sky-700 text-white hover:bg-sky-800 active:bg-sky-900 focus:ring-sky-600 shadow-xs",
-    secondary: "bg-slate-800 text-white hover:bg-slate-900 focus:ring-slate-700",
-    outline: "border border-sky-700 text-sky-800 bg-white hover:bg-sky-50 focus:ring-sky-600",
-    whatsapp: "bg-emerald-600 text-white hover:bg-emerald-700 focus:ring-emerald-500 shadow-xs font-semibold",
-    ghost: "bg-transparent text-slate-700 hover:bg-slate-100 focus:ring-slate-400",
+    primary: "bg-gradient-to-r from-sky-600 via-sky-700 to-indigo-700 text-white hover:from-sky-700 hover:to-indigo-800 focus:ring-indigo-600 shadow-sm font-bold",
+    secondary: "bg-indigo-900 text-white hover:bg-indigo-950 focus:ring-indigo-700 font-semibold shadow-xs",
+    outline: "border border-indigo-200 text-indigo-900 bg-white hover:bg-sky-50 hover:border-sky-300 focus:ring-indigo-500 font-semibold",
+    whatsapp: "bg-gradient-to-r from-emerald-600 to-teal-700 text-white hover:from-emerald-700 hover:to-teal-800 focus:ring-emerald-500 shadow-sm font-bold",
+    ghost: "bg-transparent text-slate-700 hover:bg-sky-50 hover:text-sky-800 focus:ring-sky-400",
   };
 
   const sizes = {

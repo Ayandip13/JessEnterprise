@@ -24,9 +24,13 @@ export function SettingsClientForm({ initialSettings }: SettingsClientFormProps)
     setMessage(null);
 
     try {
+      const token = typeof window !== "undefined" ? localStorage.getItem("jess_admin_token") || "" : "";
       const res = await fetch("/api/settings", {
         method: "PUT",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          "x-admin-secret": token,
+        },
         body: JSON.stringify(settings),
       });
 

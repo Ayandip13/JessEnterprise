@@ -74,13 +74,13 @@ export default async function HomePage() {
         <CustomerLogos />
 
         {/* WhatsApp Quote Banner CTA */}
-        <section className="bg-sky-900 text-white py-14 border-t border-sky-800">
+        <section className="bg-gradient-to-r from-sky-700 via-indigo-800 to-indigo-950 text-white py-14 border-t border-indigo-700 shadow-inner">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-4">
-            <div className="inline-flex items-center gap-2 bg-sky-800/80 px-3 py-1 rounded text-xs text-sky-200 font-bold uppercase tracking-wider">
+            <div className="inline-flex items-center gap-2 bg-indigo-900/80 px-3.5 py-1.5 rounded-full text-xs text-sky-200 font-bold uppercase tracking-wider border border-indigo-700">
               <ShieldCheck className="w-4 h-4 text-sky-300" />
               Statutory Compliance & Fast Response
             </div>
-            <h2 className="text-2xl sm:text-3xl font-extrabold">
+            <h2 className="text-2xl sm:text-3xl font-extrabold text-white">
               Need a Custom Quotation or Legal Metrology Stamping?
             </h2>
             <p className="text-sm text-sky-100 max-w-2xl mx-auto">
@@ -88,12 +88,12 @@ export default async function HomePage() {
             </p>
             <div className="pt-2 flex flex-wrap justify-center gap-4">
               <Link href="/contact">
-                <Button variant="whatsapp" size="lg" className="font-bold">
+                <Button variant="whatsapp" size="lg" className="font-bold shadow-md">
                   <Send className="w-4 h-4" /> Enquire via WhatsApp
                 </Button>
               </Link>
               <Link href="/products">
-                <Button variant="outline" size="lg" className="border-sky-700 text-white hover:bg-sky-800">
+                <Button variant="outline" size="lg" className="border-sky-300 text-white hover:bg-white/10">
                   Explore Products Catalog
                 </Button>
               </Link>

@@ -131,12 +131,12 @@ export default async function ProductDetailPage({
               </div>
 
               {/* Metrology & Calibration Guarantee Note */}
-              <div className="bg-slate-900 text-white rounded-lg p-5 text-xs space-y-2 border border-slate-800">
-                <div className="flex items-center gap-2 text-sky-400 font-bold">
-                  <Scale className="w-4 h-4 text-sky-400" />
+              <div className="bg-gradient-to-r from-sky-900 via-indigo-900 to-indigo-950 text-white rounded-xl p-5 text-xs space-y-2 border border-indigo-800 shadow-xs">
+                <div className="flex items-center gap-2 text-sky-300 font-bold">
+                  <Scale className="w-4 h-4 text-sky-300" />
                   Legal Metrology & Quality Assurance
                 </div>
-                <p className="text-slate-300 leading-relaxed">
+                <p className="text-slate-200 leading-relaxed">
                   All weighing balances and calibration weights supplied by Jess Enterprises comply with standard Legal Metrology guidelines (Lic.No. {settings.legalMetrologyLicNo}). NABL accredited calibration certificates and Annual Maintenance Contracts (AMC) available upon request.
                 </p>
               </div>

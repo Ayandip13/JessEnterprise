@@ -22,15 +22,15 @@ export default async function AboutPage() {
       <main className="flex-1 py-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
           {/* Header Banner */}
-          <div className="bg-slate-900 text-white rounded-lg p-6 sm:p-10 border border-slate-800">
-            <div className="inline-flex items-center gap-1.5 bg-sky-950 text-sky-400 text-xs font-bold px-2.5 py-1 rounded border border-sky-800 mb-3">
-              <Scale className="w-3.5 h-3.5 text-sky-400" />
+          <div className="bg-gradient-to-r from-sky-600 via-indigo-700 to-indigo-900 text-white rounded-xl p-6 sm:p-10 border border-indigo-600/30 shadow-sm">
+            <div className="inline-flex items-center gap-1.5 bg-indigo-950/60 text-sky-200 text-xs font-bold px-3 py-1 rounded-full border border-sky-400/40 mb-3">
+              <Scale className="w-3.5 h-3.5 text-sky-300" />
               Company Profile & Credentials
             </div>
-            <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight">
+            <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-white">
               About Jess Enterprises
             </h1>
-            <p className="text-sm text-slate-300 mt-2 max-w-3xl leading-relaxed">
+            <p className="text-sm text-sky-100 mt-2 max-w-3xl leading-relaxed">
               {settings.aboutText}
             </p>
           </div>

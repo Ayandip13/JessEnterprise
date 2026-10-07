@@ -21,15 +21,15 @@ export default async function CustomersPage() {
       <main className="flex-1 py-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
           {/* Header Banner */}
-          <div className="bg-slate-900 text-white rounded-lg p-6 sm:p-8 border border-slate-800">
-            <div className="inline-flex items-center gap-1.5 bg-sky-950 text-sky-400 text-xs font-bold px-2.5 py-1 rounded border border-sky-800 mb-2">
-              <Award className="w-3.5 h-3.5 text-sky-400" />
+          <div className="bg-gradient-to-r from-sky-600 via-indigo-700 to-indigo-900 text-white rounded-xl p-6 sm:p-8 border border-indigo-600/30 shadow-sm">
+            <div className="inline-flex items-center gap-1.5 bg-indigo-950/60 text-sky-200 text-xs font-bold px-3 py-1 rounded-full border border-sky-400/40 mb-2">
+              <Award className="w-3.5 h-3.5 text-sky-300" />
               Precious Customers & Industrial Associations
             </div>
-            <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight">
+            <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-white">
               Our Esteemed Corporate & Research Clients
             </h1>
-            <p className="text-xs sm:text-sm text-slate-300 mt-1 max-w-2xl">
+            <p className="text-xs sm:text-sm text-sky-100 mt-1 max-w-2xl">
               We take immense pride in partnering with industry leaders across pharmaceuticals, specialty chemicals, advanced composite engineering, oceanography, and premier academic institutions.
             </p>
           </div>

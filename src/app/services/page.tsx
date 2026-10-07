@@ -23,27 +23,27 @@ export default async function ServicesPage() {
       <main className="flex-1 py-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
           {/* Header Banner */}
-          <div className="bg-slate-900 text-white rounded-lg p-6 sm:p-8 border border-slate-800 flex flex-col md:flex-row md:items-center justify-between gap-6">
+          <div className="bg-gradient-to-r from-sky-600 via-indigo-700 to-indigo-900 text-white rounded-xl p-6 sm:p-8 border border-indigo-600/30 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-6">
             <div>
-              <div className="inline-flex items-center gap-1.5 bg-sky-950 text-sky-400 text-xs font-bold px-2.5 py-1 rounded border border-sky-800 mb-2">
-                <ShieldCheck className="w-3.5 h-3.5 text-sky-400" />
+              <div className="inline-flex items-center gap-1.5 bg-indigo-950/60 text-sky-200 text-xs font-bold px-3 py-1 rounded-full border border-sky-400/40 mb-2">
+                <ShieldCheck className="w-3.5 h-3.5 text-sky-300" />
                 Statutory Metrology & Engineering Services
               </div>
-              <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight">
+              <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-white">
                 Services, AMC & Custom Fabrication
               </h1>
-              <p className="text-xs sm:text-sm text-slate-300 mt-1 max-w-2xl">
+              <p className="text-xs sm:text-sm text-sky-100 mt-1 max-w-2xl">
                 Government authorised Legal Metrology stamping, comprehensive annual maintenance contracts for balances, and bespoke fabrication in Stainless Steel, Acrylic, and Teflon.
               </p>
             </div>
 
-            <div className="bg-slate-800 p-4 rounded border border-slate-700 text-xs shrink-0 space-y-1">
-              <div className="text-slate-400 font-medium">Metrology License Number:</div>
+            <div className="bg-indigo-950/70 p-4 rounded-lg border border-indigo-500/40 text-xs shrink-0 space-y-1">
+              <div className="text-sky-200 font-medium">Metrology License Number:</div>
               <div className="text-sm font-bold text-amber-300 font-mono">
                 Lic.No. – {settings.legalMetrologyLicNo}
               </div>
-              <div className="text-slate-300 font-medium pt-1">
-                GST: <span className="font-mono text-white">{settings.gstNo}</span>
+              <div className="text-sky-100 font-medium pt-1">
+                GST: <span className="font-mono text-white font-bold">{settings.gstNo}</span>
               </div>
             </div>
           </div>

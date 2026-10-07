@@ -186,13 +186,13 @@ export function QuoteModal({
     >
       <div className="bg-white rounded-xl border border-slate-200 shadow-2xl max-w-lg w-full overflow-hidden my-8 animate-in fade-in zoom-in duration-150 flex flex-col max-h-[90vh]">
         {/* Modal Header */}
-        <div className="bg-slate-900 text-white px-5 sm:px-6 py-4 flex items-center justify-between shrink-0">
+        <div className="bg-gradient-to-r from-sky-700 via-indigo-800 to-indigo-950 text-white px-5 sm:px-6 py-4 flex items-center justify-between shrink-0 shadow-xs">
           <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded bg-sky-700 flex items-center justify-center text-white shrink-0">
+            <div className="w-8 h-8 rounded-md bg-white/10 border border-white/20 flex items-center justify-center text-white shrink-0">
               <Scale className="w-4 h-4" />
             </div>
             <div>
-              <span className="text-[10px] uppercase font-bold text-sky-400 tracking-wider block">
+              <span className="text-[10px] uppercase font-bold text-sky-200 tracking-wider block">
                 Jess Enterprises B2B Quote
               </span>
               <h3 id="enquiry-modal-title" className="text-base sm:text-lg font-bold text-white line-clamp-1">
@@ -204,7 +204,7 @@ export function QuoteModal({
           </div>
           <button
             onClick={onClose}
-            className="text-slate-400 hover:text-white p-1.5 rounded-md transition-colors"
+            className="text-sky-200 hover:text-white p-1.5 rounded-md transition-colors"
             aria-label="Close modal"
           >
             <X className="w-5 h-5" />

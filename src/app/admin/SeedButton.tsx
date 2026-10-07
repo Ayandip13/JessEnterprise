@@ -12,7 +12,11 @@ export function SeedButton() {
     setLoading(true);
     setMessage(null);
     try {
-      const res = await fetch("/api/seed", { method: "POST" });
+      const token = typeof window !== "undefined" ? localStorage.getItem("jess_admin_token") || "" : "";
+      const res = await fetch("/api/seed", {
+        method: "POST",
+        headers: { "x-admin-secret": token },
+      });
       const data = await res.json();
       if (data.success) {
         setMessage(data.message || "Database successfully seeded from PDF!");

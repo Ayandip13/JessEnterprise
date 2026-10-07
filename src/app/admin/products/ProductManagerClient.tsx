@@ -67,9 +67,13 @@ export function ProductManagerClient({
     };
 
     try {
+      const token = typeof window !== "undefined" ? localStorage.getItem("jess_admin_token") || "" : "";
       const res = await fetch("/api/products", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          "x-admin-secret": token,
+        },
         body: JSON.stringify(newProdPayload),
       });
 
