@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import mongoose from "mongoose";
 import { connectToDatabase } from "@/lib/db";
 import { ClientLogoModel } from "@/lib/models/ClientLogo";
 import { verifyAdminAuth } from "@/lib/auth";
@@ -24,10 +25,14 @@ export async function PUT(
     const { id } = await params;
     const body = await req.json();
 
-    const updated = await ClientLogoModel.findByIdAndUpdate(id, body, { new: true });
-    if (!updated) {
-      return NextResponse.json({ success: false, error: "Client company not found" }, { status: 404 });
-    }
+    const isId = mongoose.Types.ObjectId.isValid(id);
+    const query = isId ? { _id: id } : { name: body.name || id };
+
+    const updated = await ClientLogoModel.findOneAndUpdate(query, body, {
+      new: true,
+      upsert: true,
+      setDefaultsOnInsert: true,
+    });
 
     return NextResponse.json({ success: true, data: updated });
   } catch (error: any) {

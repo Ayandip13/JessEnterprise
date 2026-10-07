@@ -64,12 +64,8 @@ export async function PUT(
           legalMetrologyCert: body.legalMetrologyCert,
         },
       },
-      { new: true }
+      { new: true, upsert: true, setDefaultsOnInsert: true }
     );
-
-    if (!updated) {
-      return NextResponse.json({ success: false, error: "Product not found" }, { status: 404 });
-    }
 
     return NextResponse.json({ success: true, data: updated });
   } catch (error: any) {
