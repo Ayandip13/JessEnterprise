@@ -148,7 +148,7 @@ export function AdminAuthWrapper({ children }: { children: React.ReactNode }) {
     <div className="min-h-screen bg-slate-50 flex flex-col md:flex-row text-slate-900">
       {/* Mobile Topbar Navigation Header (visible on < md) */}
       <header className="md:hidden bg-indigo-950 text-white p-4 flex items-center justify-between border-b border-indigo-900 sticky top-0 z-30">
-        <Link href="/" className="flex items-center gap-2">
+        <Link href="/admin" className="flex items-center gap-2">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src="/images/jess-logo.png"
@@ -178,7 +178,7 @@ export function AdminAuthWrapper({ children }: { children: React.ReactNode }) {
         } md:block w-full md:w-64 bg-gradient-to-b from-indigo-950 via-slate-900 to-indigo-950 text-slate-200 border-r border-indigo-900 flex-col shrink-0 md:min-h-screen shadow-sm`}
       >
         <div className="hidden md:flex p-6 border-b border-indigo-900/60 items-center justify-between">
-          <Link href="/" className="flex items-center gap-2.5">
+          <Link href="/admin" className="flex items-center gap-2.5">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src="/images/jess-logo.png"
