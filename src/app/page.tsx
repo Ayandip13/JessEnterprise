@@ -12,11 +12,16 @@ import { getProducts, getCompanySettings } from "@/lib/data-service";
 import { ArrowRight, ShieldCheck, Scale, Send } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 
-export const metadata: Metadata = {
-  title: "Jess Enterprises | Legal Metrology & Laboratory Equipment",
-  description:
-    "Authorised Legal Metrology Lic.No. 22000126 - CLM. Sales, Service & AMC of Lab & Industrial Balances, Spectrophotometers, Meters, and Custom SS/MS/Acrylic Fabrication.",
-};
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
+export async function generateMetadata(): Promise<Metadata> {
+  return {
+    title: "Jess Enterprises | Legal Metrology & Laboratory Equipment",
+    description:
+      "Authorised Legal Metrology Lic.No. 22000126 - CLM. Sales, Service & AMC of Lab & Industrial Balances, Spectrophotometers, Meters, and Custom SS/MS/Acrylic Fabrication.",
+  };
+}
 
 export default async function HomePage() {
   const featuredProducts = await getProducts({ isFeatured: true });

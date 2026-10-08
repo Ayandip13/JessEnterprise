@@ -12,6 +12,9 @@ export const metadata: Metadata = {
     "Explore analytical instruments, Legal Metrology balances, spectrophotometers, water baths, centrifuges, and custom fabrication units from Jess Enterprises.",
 };
 
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 export default async function ProductsPage({
   searchParams,
 }: {

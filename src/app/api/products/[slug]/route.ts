@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { revalidatePath } from "next/cache";
 import { getProductBySlug } from "@/lib/data-service";
 import { connectToDatabase } from "@/lib/db";
 import { ProductModel } from "@/lib/models/Product";
@@ -75,11 +76,19 @@ export async function PUT(
         { new: true }
       );
       if (fallbackUpdated) {
+        revalidatePath("/");
+        revalidatePath("/products");
+        revalidatePath("/admin/products");
+        revalidatePath(`/products/${fallbackUpdated.slug}`);
         return NextResponse.json({ success: true, data: fallbackUpdated });
       }
       return NextResponse.json({ success: false, error: "Product not found" }, { status: 404 });
     }
 
+    revalidatePath("/");
+    revalidatePath("/products");
+    revalidatePath("/admin/products");
+    revalidatePath(`/products/${updated.slug}`);
     return NextResponse.json({ success: true, data: updated });
   } catch (error: any) {
     return NextResponse.json({ success: false, error: error.message }, { status: 500 });
