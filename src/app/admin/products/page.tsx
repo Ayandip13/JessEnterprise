@@ -2,6 +2,9 @@ import React from "react";
 import { getProducts, getCategories } from "@/lib/data-service";
 import { ProductManagerClient } from "./ProductManagerClient";
 
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 export default async function AdminProductsPage() {
   const products = await getProducts();
   const categories = await getCategories();

@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import { useRouter } from "next/navigation";
 import { Plus, Trash2, Edit, Save, X, Upload, Image as ImageIcon, CheckCircle2 } from "lucide-react";
 import { CatalogProduct, CatalogCategory } from "@/lib/catalog-data";
 import { Button } from "@/components/ui/Button";
@@ -16,6 +17,7 @@ export function ProductManagerClient({
   initialProducts,
   categories,
 }: ProductManagerClientProps) {
+  const router = useRouter();
   const [products, setProducts] = useState<CatalogProduct[]>(initialProducts);
   const [showAddForm, setShowAddForm] = useState(false);
   const [editingProduct, setEditingProduct] = useState<CatalogProduct | null>(null);
@@ -168,6 +170,7 @@ export function ProductManagerClient({
             )
           );
           resetForm();
+          router.refresh();
         } else {
           // Alert user if update failed on backend DB
           alert(data.error || "Failed to update product in database");
