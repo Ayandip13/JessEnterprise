@@ -45,27 +45,40 @@ export async function PUT(
     const body = await req.json();
 
     const isId = mongoose.Types.ObjectId.isValid(identifier);
-    const query = isId ? { $or: [{ _id: identifier }, { slug: identifier }] } : { slug: identifier };
+    const query = isId ? { _id: identifier } : { slug: identifier };
+
+    const updateFields: any = {
+      name: body.name,
+      categorySlug: body.categorySlug,
+      categoryName: body.categoryName,
+      shortDescription: body.shortDescription,
+      fullDescription: body.fullDescription,
+      images: Array.isArray(body.images) ? body.images : [],
+      specifications: body.specifications,
+      isFeatured: body.isFeatured,
+      isAvailable: body.isAvailable,
+      enquiryEnabled: body.enquiryEnabled,
+      legalMetrologyCert: body.legalMetrologyCert,
+    };
 
     const updated = await ProductModel.findOneAndUpdate(
       query,
-      {
-        $set: {
-          name: body.name,
-          categorySlug: body.categorySlug,
-          categoryName: body.categoryName,
-          shortDescription: body.shortDescription,
-          fullDescription: body.fullDescription,
-          images: body.images,
-          specifications: body.specifications,
-          isFeatured: body.isFeatured,
-          isAvailable: body.isAvailable,
-          enquiryEnabled: body.enquiryEnabled,
-          legalMetrologyCert: body.legalMetrologyCert,
-        },
-      },
-      { new: true, upsert: true, setDefaultsOnInsert: true }
+      { $set: updateFields },
+      { new: true }
     );
+
+    if (!updated) {
+      // Try searching by slug if passed identifier was string id or vice versa
+      const fallbackUpdated = await ProductModel.findOneAndUpdate(
+        { slug: identifier },
+        { $set: updateFields },
+        { new: true }
+      );
+      if (fallbackUpdated) {
+        return NextResponse.json({ success: true, data: fallbackUpdated });
+      }
+      return NextResponse.json({ success: false, error: "Product not found" }, { status: 404 });
+    }
 
     return NextResponse.json({ success: true, data: updated });
   } catch (error: any) {

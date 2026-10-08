@@ -154,23 +154,24 @@ export function ProductManagerClient({
         });
 
         const data = await res.json();
-        if (data.success) {
+        if (res.ok && data.success) {
           setStatusMessage("Product updated successfully!");
           setProducts(
             products.map((p) =>
-              p.id === editingProduct.id ? { ...p, ...prodPayload } : p
+              p.id === editingProduct.id
+                ? {
+                    ...p,
+                    ...prodPayload,
+                    id: data.data?._id ? String(data.data._id) : p.id,
+                  }
+                : p
             )
           );
           resetForm();
         } else {
-          // Fallback update in state
-          setProducts(
-            products.map((p) =>
-              p.id === editingProduct.id ? { ...p, ...prodPayload } : p
-            )
-          );
-          setStatusMessage("Product updated locally.");
-          resetForm();
+          // Alert user if update failed on backend DB
+          alert(data.error || "Failed to update product in database");
+          setStatusMessage("Error updating product: " + (data.error || "Database error"));
         }
       } else {
         // Create new product
